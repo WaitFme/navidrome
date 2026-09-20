@@ -1,5 +1,33 @@
 #!/bin/bash
+set -e
 
-### This script is called after the user upgrades the application.
+# 根据架构确定二进制文件名
+ARCH=$(uname -m)
+case "$ARCH" in
+    x86_64|amd64)
+        NAV_BIN="$TRIM_APPDEST/server/navidrome_amd64"
+        ;;
+    aarch64|arm64)
+        NAV_BIN="$TRIM_APPDEST/server/navidrome_aarch64"
+        ;;
+    *)
+        echo "不支持的架构: $ARCH" > "$TRIM_TEMP_LOGFILE"
+        exit 1
+        ;;
+esac
+
+# 确认二进制存在且可执行
+if [ ! -x "$NAV_BIN" ]; then
+    echo "升级失败：未找到可执行文件 $NAV_BIN" > "$TRIM_TEMP_LOGFILE"
+    exit 1
+fi
+
+# 确保数据目录存在
+mkdir -p "$TRIM_PKGVAR/data" || true
+
+# 不覆盖已有配置，仅确认目录结构完整
+if [ ! -f "$TRIM_PKGETC/navidrome.toml" ]; then
+    echo "警告：配置文件不存在，可能需要重新配置" >> "$TRIM_TEMP_LOGFILE"
+fi
 
 exit 0

@@ -1,5 +1,19 @@
 #!/bin/bash
+set -e
 
-### This script is called before the user upgrades the application.
+# 升级前校验配置文件是否存在且可读
+if [ -f "$TRIM_PKGETC/navidrome.toml" ]; then
+    if [ ! -r "$TRIM_PKGETC/navidrome.toml" ]; then
+        echo "配置文件不可读，升级中止" > "$TRIM_TEMP_LOGFILE"
+        exit 1
+    fi
+fi
+
+# 检查旧版数据目录
+if [ -d "$TRIM_PKGVAR/data" ]; then
+    if [ ! -f "$TRIM_PKGVAR/data/navidrome.db" ]; then
+        echo "警告：未找到数据库文件，可能是首次安装" >> "$TRIM_TEMP_LOGFILE"
+    fi
+fi
 
 exit 0
