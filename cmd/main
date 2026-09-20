@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# 判断系统架构
+ARCH=$(uname -m)
+
+case "$ARCH" in
+    x86_64|amd64)
+        NAV_BIN="$TRIM_APPDEST/server/navidrome_amd64"
+        ;;
+    aarch64|arm64)
+        NAV_BIN="$TRIM_APPDEST/server/navidrome_aarch64"
+        ;;
+    *)
+        echo "Unsupported architecture: $ARCH"
+        exit 1
+        ;;
+esac
+
+case "$1" in
+    start)
+        cd "$(dirname "$NAV_BIN")"
+        "$NAV_BIN" --configfile "$TRIM_PKGETC/navidrome.toml" \
+                   > "$TRIM_PKGVAR/navidrome.log" 2>&1 &
+        echo $! > "$TRIM_PKGVAR/navidrome.pid"
+        ;;
+    stop)
+        [ -f "$TRIM_PKGVAR/navidrome.pid" ] && kill $(cat "$TRIM_PKGVAR/navidrome.pid") 2>/dev/null
+        ;;
+    status)
+        [ -f "$TRIM_PKGVAR/navidrome.pid" ] && kill -0 $(cat "$TRIM_PKGVAR/navidrome.pid") 2>/dev/null
+        exit $?
+        ;;
+esac

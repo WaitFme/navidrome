@@ -1,0 +1,5 @@
+#!/bin/bash
+
+[ -f "$TRIM_PKGVAR/navidrome.pid" ] && kill $(cat "$TRIM_PKGVAR/navidrome.pid") 2>/dev/null
+
+exit 0

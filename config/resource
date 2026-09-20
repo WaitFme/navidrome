@@ -1,0 +1,25 @@
+{
+  "port-config": {
+    "protocol-file": "app/navidrome.sc"
+  },
+  "data-share": {
+    "shares": [
+      {
+        "name": "navidrome",
+        "permission": {
+          "rw": [
+            "navidrome"
+          ]
+        }
+      },
+      {
+        "name": "navidrome/music",
+        "permission": {
+          "rw": [
+            "navidrome"
+          ]
+        }
+      }
+    ]
+  }
+}

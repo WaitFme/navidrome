@@ -1,0 +1,16 @@
+appname = navidrome
+version = 0.64.0
+display_name = Navidrome
+service_port = 4533
+desc = <p>Navidrome allows you to enjoy your music collection from anywhere, by making it available through a modern Web UI and through a wide range of third-party compatible mobile apps, for both iOS and Android devices.</p><p>Navidrome is open source software distributed <strong>free of charge</strong> under the terms of the <a href="https://www.gnu.org/licenses/gpl-3.0">GNU GPL v3</a> license.</p>
+platform = all
+source = thirdparty
+maintainer = Navidrome
+maintainer_url = https://www.navidrome.org/
+distributor = ANPE
+distributor_url = https://github.com/WaitFme
+desktop_uidir = ui
+desktop_applaunchname = navidrome.Application
+disable_authorization_path = false
+ctl_stop = true
+checkport = true
